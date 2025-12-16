@@ -50,6 +50,7 @@ parser grammar DPLParserProcess;
 import DPLParserAggregations,
        DPLParserEvals,
        DPLParserTransform_abstract,
+       DPLParserTransform_admin,
        DPLParserTransform_accum,
        DPLParserTransform_addcoltotals,
        DPLParserTransform_addinfo,
@@ -207,6 +208,7 @@ import DPLParserAggregations,
 
 transformStatement
 	: abstractTransformation (PIPE transformStatement)?
+	    | adminTransformation (PIPE transformStatement)?
         | accumTransformation (PIPE transformStatement)?
         | addcoltotalsTransformation (PIPE transformStatement)?
         | addinfoTransformation (PIPE transformStatement)?
