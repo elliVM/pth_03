@@ -55,7 +55,7 @@ t_migrateSubParameter : COMMAND_ADMIN_MODE_EPOCH t_epochArgs?;
 
 t_epochArgs : tableOption?;
 
-tableOption : (COMMAND_ADMIN_MODE_TABLE_EQ | COMMAND_ADMIN_MODE_TABLE) stringType;
+tableOption :  COMMAND_ADMIN_MODE_TABLE stringType;
 
 stringType
     : GET_STRING_SINGLE_QUOTED

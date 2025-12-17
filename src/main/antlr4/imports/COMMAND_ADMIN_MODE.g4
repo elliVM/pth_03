@@ -61,5 +61,4 @@ COMMAND_ADMIN_MODE_MIGRATE : [mM][iI][gG][rR][aA][tT][eE] ;
 // epoch
 COMMAND_ADMIN_MODE_EPOCH   : [eE][pP][oO][cC][hH] ;
 // table option
-COMMAND_ADMIN_MODE_TABLE_EQ : [tT][aA][bB][lL][eE] '=' -> pushMode(GET_STRING) ;
-COMMAND_ADMIN_MODE_TABLE : [tT][aA][bB][lL][eE] -> pushMode(GET_STRING) ;
+COMMAND_ADMIN_MODE_TABLE : [tT][aA][bB][lL][eE] '='? -> pushMode(GET_STRING) ;
