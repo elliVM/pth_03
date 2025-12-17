@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -55,18 +55,14 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.w3c.dom.NodeList;
 
 public class StreamstatsSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
-            "streamstats",
-            "streamstats2",
-            "streamstats3",
-            "streamstats4",
-            "streamstats5",
+            "streamstats", "streamstats2", "streamstats3", "streamstats4", "streamstats5",
     })
     public void streamstatsSyntaxParseTest(String arg) throws Exception {
         String fileName = "src/test/resources/antlr4/commands/streamstats/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
 
@@ -81,8 +77,9 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "streamstats",
@@ -94,7 +91,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -108,7 +105,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -122,7 +119,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -136,7 +133,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -150,7 +147,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -164,7 +161,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -178,7 +175,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -192,7 +189,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -206,7 +203,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -220,7 +217,7 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -234,6 +231,6 @@ public class StreamstatsSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 }

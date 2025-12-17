@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -58,17 +58,14 @@ import org.w3c.dom.NodeList;
 import java.lang.reflect.InvocationTargetException;
 
 public class HeadSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
-            "head",
-            "head2",
-            "head4",
-            "head6",
+            "head", "head2", "head4", "head6",
     })
     public void headSyntaxParseTest(String arg) throws Exception {
         String fileName = "src/test/resources/antlr4/commands/head/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
 
@@ -83,7 +80,7 @@ public class HeadSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -97,7 +94,7 @@ public class HeadSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -111,7 +108,7 @@ public class HeadSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -125,7 +122,7 @@ public class HeadSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -139,7 +136,7 @@ public class HeadSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -152,8 +149,10 @@ public class HeadSyntaxTests {
         String integerExp = "/root/transformStatement/headTransformation/t_head_integerType/value";
         String sortExp = "/root/transformStatement/transformStatement/sortTransformation/value";
 
-        NodeList integerNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, integerExp, false));
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortExp, false));
+        NodeList integerNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, integerExp, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortExp, false));
 
         // Check that 1 found
         assertEquals(1, integerNode.getLength());
@@ -166,8 +165,7 @@ public class HeadSyntaxTests {
     })
     void headWithEvalAndIntegerTest(String arg) { // should not parse, both integer and eval is not allowed
         String fileName = "src/test/resources/antlr4/commands/head/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -183,10 +181,14 @@ public class HeadSyntaxTests {
         String keepLastExp = "/root/transformStatement/headTransformation/t_head_keepLastParameter/value";
         String nullExp = "/root/transformStatement/headTransformation/t_head_nullParameter/value";
 
-        NodeList evalNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, evalExp, false));
-        NodeList limitNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, limitExp, false));
-        NodeList keepLastNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, keepLastExp, false));
-        NodeList nullNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, nullExp, false));
+        NodeList evalNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, evalExp, false));
+        NodeList limitNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, limitExp, false));
+        NodeList keepLastNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, keepLastExp, false));
+        NodeList nullNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, nullExp, false));
 
         // Check that 1 found
         assertEquals(1, evalNode.getLength());
@@ -201,8 +203,7 @@ public class HeadSyntaxTests {
     })
     void headWithLimitAndInteger(String arg) { // should not parse, both integer and limit is not allowed
         String fileName = "src/test/resources/antlr4/commands/head/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -215,7 +216,8 @@ public class HeadSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/head/" + arg + ".txt";
         String headCmd = "/root/transformStatement/headTransformation/value";
 
-        NodeList headNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, headCmd, false));
+        NodeList headNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, headCmd, false));
 
         // Check that 1 found
         assertEquals(1, headNode.getLength());

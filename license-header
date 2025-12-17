@@ -43,20 +43,3 @@
  * Teragrep, the applicable Commercial License may apply to this file if you as
  * a licensee so wish it.
  */
-parser grammar DPLParserTransform_tscollect;
-
-tscollectTransformation
-        : COMMAND_MODE_TSCOLLECT (t_tscollect_namespaceParameter)? (t_tscollect_squashcaseParameter)? (t_tscollect_keepresultsParameter)?
-        ;
-
-t_tscollect_keepresultsParameter
-        : COMMAND_TSCOLLECT_MODE_KEEPRESULTS booleanType
-        ;
-
-t_tscollect_namespaceParameter
-        : COMMAND_TSCOLLECT_MODE_NAMESPACE stringType
-        ;
-
-t_tscollect_squashcaseParameter
-        : COMMAND_TSCOLLECT_MODE_SQUASHCASE booleanType
-        ;

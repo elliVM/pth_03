@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -55,6 +55,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.w3c.dom.NodeList;
 
 public class TimechartSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
             "timechart",
@@ -70,8 +71,7 @@ public class TimechartSyntaxTests {
     })
     public void timechartSyntaxParseTest(String arg) throws Exception {
         String fileName = "src/test/resources/antlr4/commands/timechart/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
 
@@ -86,8 +86,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart",
@@ -99,7 +100,7 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -113,8 +114,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart",
@@ -126,8 +128,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart",
@@ -139,8 +142,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart",
@@ -152,8 +156,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart",
@@ -165,8 +170,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart3",
@@ -178,8 +184,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart3",
@@ -191,8 +198,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart3",
@@ -204,8 +212,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart4",
@@ -217,8 +226,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart4",
@@ -230,8 +240,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart4",
@@ -243,8 +254,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart5",
@@ -256,8 +268,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart5",
@@ -269,8 +282,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -282,8 +296,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -295,8 +310,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -308,8 +324,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -321,8 +338,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -334,8 +352,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -347,8 +366,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -360,8 +380,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -373,8 +394,9 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
@@ -386,36 +408,35 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
-
 
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart6",
-	})
-	void xpathTest25(String arg) throws Exception {
+    })
+    void xpathTest25(String arg) throws Exception {
         ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
         String fileName = "src/test/resources/antlr4/commands/timechart/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/timechartTransformation/t_timechart_fixedrangeParameter/booleanType/value";
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {
             "timechart4",
-	})
-	void xpathTest26(String arg) throws Exception {
+    })
+    void xpathTest26(String arg) throws Exception {
         ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
         String fileName = "src/test/resources/antlr4/commands/timechart/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/timechartTransformation/t_timechart_fieldRenameInstruction/fieldType/value";
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -429,7 +450,6 @@ public class TimechartSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 }
-

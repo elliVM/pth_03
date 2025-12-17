@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -48,9 +48,8 @@ package com.teragrep.pth_03;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class DPLLanguageSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
             "accum",
@@ -89,11 +88,8 @@ public class DPLLanguageSyntaxTests {
     })
     public void syntaxParseTest(String arg) throws Exception {
         String fileName = "src/test/resources/antlr4/DPLExamples/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
-
-
 
 }

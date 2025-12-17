@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -43,7 +43,6 @@
  * Teragrep, the applicable Commercial License may apply to this file if you as
  * a licensee so wish it.
  */
-
 package com.teragrep.pth_03;
 
 import org.junit.jupiter.api.Assertions;
@@ -57,6 +56,7 @@ import java.lang.reflect.InvocationTargetException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TicketSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
             "ticket1",
@@ -158,9 +158,8 @@ public class TicketSyntaxTests {
             "ticket241PTH10"
     })
     public void syntaxParseTest(String arg) throws Exception {
-        String fileName = "src/test/resources/antlr4/tickets/"+ arg +".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
 
@@ -168,13 +167,11 @@ public class TicketSyntaxTests {
     @Disabled(value = "GH issue #49: sort doesn't support sorting with more than two fields.")
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
-            "tickets_71",
-            "tickets71_A",
+            "tickets_71", "tickets71_A",
     })
     public void sortParseTest(String arg) {
-        String fileName = "src/test/resources/antlr4/tickets/"+ arg +".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -189,8 +186,9 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "ticket76",
@@ -202,9 +200,10 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
-//ticket 51
+
+    //ticket 51
     @ParameterizedTest
     @ValueSource(strings = {
             "ticket51_C",
@@ -216,7 +215,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -230,7 +229,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -244,7 +243,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -258,7 +257,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -272,7 +271,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -286,7 +285,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -300,7 +299,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -314,7 +313,7 @@ public class TicketSyntaxTests {
 
         NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -323,8 +322,7 @@ public class TicketSyntaxTests {
     })
     void invalidWhereQueryTest(String arg) {
         String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -335,8 +333,7 @@ public class TicketSyntaxTests {
     })
     void aggregateWithEvalColumnTest(String arg) {
         String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -347,8 +344,7 @@ public class TicketSyntaxTests {
     })
     void aggregateWithEvalColumnTest_2(String arg) {
         String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -359,8 +355,7 @@ public class TicketSyntaxTests {
     })
     void dedupConsecutiveOnLeftSideOfFieldListTest(String arg) { // should work on either side of the fieldList
         String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -371,8 +366,7 @@ public class TicketSyntaxTests {
     })
     void dedupKeepemptyOnLeftSideOfFieldListTest(String arg) { // should work on either side of the fieldList
         String fileName = "src/test/resources/antlr4/tickets/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 }

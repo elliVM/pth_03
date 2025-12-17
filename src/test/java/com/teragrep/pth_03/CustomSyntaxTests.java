@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -52,75 +52,74 @@ import org.w3c.dom.NodeList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CustomSyntaxTests {
-	@ParameterizedTest(name = "{index} command=''{0}''")
-	@ValueSource(strings = {
-			"comparisonStatement",
-			"comparisonStatement2",
-			"chartIssue",
-			"PTH10TICKET206",
-			"issue_5",
-			"testi1",
-			"testi2",
-			"evaltest",
-			"evaltest3",
-			"evaltest4",
-			"evaltest5",
-			"evaltest6",
-			"evaltest7",
-			"issueWhereIf",
-			"issueWhereIf2",
-			"logicalStatemtOr",
-			"tgAlert",
-			"NOToperator"
-	})
-	public void syntaxParseTest(String arg) throws Exception {
-		String fileName = "src/test/resources/antlr4/custom/"+ arg +".txt";
-		ParserSyntaxTestingUtility parserSyntaxTestingUtility
-				= new ParserSyntaxTestingUtility(fileName, false);
-		parserSyntaxTestingUtility.syntaxParseTest(arg);
-	}
 
-	@ParameterizedTest
-	@ValueSource(strings = {
-			"ticket28_2",
-	})
-	void xpathTest1(String arg) throws Exception {
-		ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
-		String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
-		String xpathExp = "/root/transformStatement/transformStatement/transformStatement/transformStatement/transformStatement/chartTransformation/t_chart_aggregationInstruction[3]/aggregateFunction/aggregateMethodCount/evalStatement/evalStatement[1]/evalStatement/subEvalStatement/evalStatement/evalStatement[1]/evalStatement[1]/evalFieldType/value";
+    @ParameterizedTest(name = "{index} command=''{0}''")
+    @ValueSource(strings = {
+            "comparisonStatement",
+            "comparisonStatement2",
+            "chartIssue",
+            "PTH10TICKET206",
+            "issue_5",
+            "testi1",
+            "testi2",
+            "evaltest",
+            "evaltest3",
+            "evaltest4",
+            "evaltest5",
+            "evaltest6",
+            "evaltest7",
+            "issueWhereIf",
+            "issueWhereIf2",
+            "logicalStatemtOr",
+            "tgAlert",
+            "NOToperator"
+    })
+    public void syntaxParseTest(String arg) throws Exception {
+        String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
+        parserSyntaxTestingUtility.syntaxParseTest(arg);
+    }
 
-		NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
-		// Check that 1 found
-		assertEquals(1,nodesA.getLength());
-	}
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ticket28_2",
+    })
+    void xpathTest1(String arg) throws Exception {
+        ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
+        String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
+        String xpathExp = "/root/transformStatement/transformStatement/transformStatement/transformStatement/transformStatement/chartTransformation/t_chart_aggregationInstruction[3]/aggregateFunction/aggregateMethodCount/evalStatement/evalStatement[1]/evalStatement/subEvalStatement/evalStatement/evalStatement[1]/evalStatement[1]/evalFieldType/value";
 
+        NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        // Check that 1 found
+        assertEquals(1, nodesA.getLength());
+    }
 
-	@ParameterizedTest
-	@ValueSource(strings = {
-			"ticket31",
-	})
-	void xpathTest4(String arg) throws Exception {
-		ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
-		String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
-		String xpathExp = "/root/transformStatement/chartTransformation/t_chart_aggregationInstruction/aggregateFunction/aggregateMethodCount/aggregate_fieldType/value";
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ticket31",
+    })
+    void xpathTest4(String arg) throws Exception {
+        ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
+        String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
+        String xpathExp = "/root/transformStatement/chartTransformation/t_chart_aggregationInstruction/aggregateFunction/aggregateMethodCount/aggregate_fieldType/value";
 
-		NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
-		// Check that 1 found
-		assertEquals(1,nodesA.getLength());
-	}
+        NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        // Check that 1 found
+        assertEquals(1, nodesA.getLength());
+    }
 
-	@ParameterizedTest
-	@ValueSource(strings = {
-			"ticket31_2",
-	})
-	void xpathTest5(String arg) throws Exception {
-		ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
-		String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
-		String xpathExp = "/root/transformStatement/chartTransformation/t_chart_by_column_rowOptions/t_row_Parameter/fieldType/value";
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "ticket31_2",
+    })
+    void xpathTest5(String arg) throws Exception {
+        ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
+        String fileName = "src/test/resources/antlr4/custom/" + arg + ".txt";
+        String xpathExp = "/root/transformStatement/chartTransformation/t_chart_by_column_rowOptions/t_row_Parameter/fieldType/value";
 
-		NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
-		// Check that 1 found
-		assertEquals(1,nodesA.getLength());
-	}
+        NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        // Check that 1 found
+        assertEquals(1, nodesA.getLength());
+    }
 
 }

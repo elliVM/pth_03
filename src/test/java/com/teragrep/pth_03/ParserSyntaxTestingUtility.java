@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -45,10 +45,7 @@
  */
 package com.teragrep.pth_03;
 
-
 import org.antlr.v4.runtime.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,8 +56,6 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-
-import javax.management.RuntimeErrorException;
 
 // see
 // https://github.com/antlr/antlr4/blob/79808cdcbd360fb12df800c3f77ed219ec9fef48/tool/src/org/antlr/v4/gui/TestRig.java
@@ -87,7 +82,7 @@ public class ParserSyntaxTestingUtility {
             e.printStackTrace();
         }
         Constructor<? extends Lexer> lexerCtor = lexerClass.getConstructor(CharStream.class);
-        Lexer lexer = lexerCtor.newInstance((CharStream)null);
+        Lexer lexer = lexerCtor.newInstance((CharStream) null);
 
         Class<? extends Parser> parserClass = null;
         Parser parser = null;
@@ -96,10 +91,10 @@ public class ParserSyntaxTestingUtility {
         String parserName = "com.teragrep.pth_03.antlr.DPLParser";
         parserClass = cl.loadClass(parserName).asSubclass(Parser.class);
         Constructor<? extends Parser> parserCtor = parserClass.getConstructor(TokenStream.class);
-        parser = parserCtor.newInstance((TokenStream)null);
+        parser = parserCtor.newInstance((TokenStream) null);
 
         // use UTF-8
-        Charset charset = ( StandardCharsets.UTF_8 );
+        Charset charset = (StandardCharsets.UTF_8);
 
         // load test file
         File testFile = new File(fileName);
@@ -107,9 +102,14 @@ public class ParserSyntaxTestingUtility {
         process(lexer, parserClass, parser, charStream, fileName);
 
     }
-    private void process(Lexer lexer, Class<? extends Parser> parserClass, Parser parser, CharStream input,
-                           String fileName)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+
+    private void process(
+            Lexer lexer,
+            Class<? extends Parser> parserClass,
+            Parser parser,
+            CharStream input,
+            String fileName
+    ) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         lexer.setInputStream(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         tokens.fill();
@@ -139,7 +139,7 @@ public class ParserSyntaxTestingUtility {
                 // print file contents
                 FileInputStream inFile = new FileInputStream(fileName);
                 File fileHandle = new File(fileName);
-                byte Bytes[]=new byte[(int)fileHandle.length()];
+                byte Bytes[] = new byte[(int) fileHandle.length()];
                 inFile.read(Bytes);
                 System.out.println(new String(Bytes));
                 inFile.close();
@@ -149,8 +149,8 @@ public class ParserSyntaxTestingUtility {
 
                 // print tokens
                 for (Token tok : tokens.getTokens()) {
-                    if ( tok instanceof CommonToken ) {
-                        System.out.println(((CommonToken)tok).toString(lexer));
+                    if (tok instanceof CommonToken) {
+                        System.out.println(((CommonToken) tok).toString(lexer));
                     }
                     else {
                         System.out.println(tok.toString());

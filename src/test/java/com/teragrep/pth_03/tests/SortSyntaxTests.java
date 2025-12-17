@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -43,7 +43,6 @@
  * Teragrep, the applicable Commercial License may apply to this file if you as
  * a licensee so wish it.
  */
-
 package com.teragrep.pth_03.tests;
 
 import com.teragrep.pth_03.ParserStructureTestingUtility;
@@ -59,16 +58,11 @@ public class SortSyntaxTests {
 
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
-            "sort",
-            "sortdesc",
-            "sortlimitbyint",
-            "sortminusplus",
-            "sortmodes"
+            "sort", "sortdesc", "sortlimitbyint", "sortminusplus", "sortmodes"
     })
     public void sortSyntaxParseTest(String arg) {
         String fileName = "src/test/resources/antlr4/commands/sort/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
@@ -82,12 +76,14 @@ public class SortSyntaxTests {
         String sortPath = "/root/transformStatement/sortTransformation";
         String byClausePath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/sortFieldType";
 
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
-        NodeList byClauseNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, true));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList byClauseNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, true));
 
         // Check that the correct amount is found
-        assertEquals(1,sortNode.getLength());
-        assertEquals(3,byClauseNode.getLength());
+        assertEquals(1, sortNode.getLength());
+        assertEquals(3, byClauseNode.getLength());
     }
 
     @ParameterizedTest
@@ -104,14 +100,17 @@ public class SortSyntaxTests {
         String byClausePath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/sortFieldType";
 
         // Get the list of nodes in a specific parse tree path
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
-        NodeList descNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, descPath, false));
-        NodeList byClauseNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList descNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, descPath, false));
+        NodeList byClauseNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, false));
 
         // Check that the correct amount of nodes is found
-        assertEquals(1,sortNode.getLength());
-        assertEquals(2,descNode.getLength());
-        assertEquals(2,byClauseNode.getLength());
+        assertEquals(1, sortNode.getLength());
+        assertEquals(2, descNode.getLength());
+        assertEquals(2, byClauseNode.getLength());
     }
 
     @ParameterizedTest
@@ -128,14 +127,17 @@ public class SortSyntaxTests {
         String byClausePath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/sortFieldType";
 
         // Get the list of nodes in a specific parse tree path
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
-        NodeList limitIntNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, limitIntPath, false));
-        NodeList byClauseNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList limitIntNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, limitIntPath, false));
+        NodeList byClauseNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, false));
 
         // Check that the correct amount of nodes is found
-        assertEquals(1,sortNode.getLength());
-        assertEquals(1,limitIntNode.getLength());
-        assertEquals(1,byClauseNode.getLength());
+        assertEquals(1, sortNode.getLength());
+        assertEquals(1, limitIntNode.getLength());
+        assertEquals(1, byClauseNode.getLength());
     }
 
     @ParameterizedTest
@@ -153,10 +155,14 @@ public class SortSyntaxTests {
         String byClausePath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/sortFieldType";
 
         // Get the list of nodes in a specific parse tree path
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
-        NodeList plusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, plusPath, false));
-        NodeList minusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, minusPath, false));
-        NodeList byClauseNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList plusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, plusPath, false));
+        NodeList minusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, minusPath, false));
+        NodeList byClauseNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, byClausePath, false));
 
         // Check that the correct amount of nodes is found
         assertEquals(1, sortNode.getLength());
@@ -181,22 +187,26 @@ public class SortSyntaxTests {
         String ipPath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/t_sort_byMethodIp/fieldType";
         String limitPath = "/root/transformStatement/sortTransformation/t_sort_limitParameter/integerType";
 
-
         // Get the list of nodes in a specific parse tree path
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
-        NodeList autoNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPath, false));
-        NodeList strNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPath, false));
-        NodeList numNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPath, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList autoNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPath, false));
+        NodeList strNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPath, false));
+        NodeList numNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPath, false));
         NodeList ipNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipPath, false));
-        NodeList limitNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, limitPath, false));
+        NodeList limitNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, limitPath, false));
 
         // Check that the correct amount of nodes is found
-        assertEquals(1,sortNode.getLength());
-        assertEquals(1,autoNode.getLength());
-        assertEquals(1,strNode.getLength());
-        assertEquals(1,numNode.getLength());
-        assertEquals(1,ipNode.getLength());
-        assertEquals(1,limitNode.getLength());
+        assertEquals(1, sortNode.getLength());
+        assertEquals(1, autoNode.getLength());
+        assertEquals(1, strNode.getLength());
+        assertEquals(1, numNode.getLength());
+        assertEquals(1, ipNode.getLength());
+        assertEquals(1, limitNode.getLength());
     }
 
     @ParameterizedTest
@@ -221,32 +231,39 @@ public class SortSyntaxTests {
         String ipMinusPath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/t_sort_byMethodIp/t_sortMinusOption";
 
         // Get the list of nodes in a specific parse tree path
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
 
-        NodeList autoNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPath, false));
-        NodeList strNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPath, false));
-        NodeList numNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPath, false));
+        NodeList autoNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPath, false));
+        NodeList strNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPath, false));
+        NodeList numNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPath, false));
         NodeList ipNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipPath, false));
 
-        NodeList autoMinusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoMinusPath, false));
-        NodeList strMinusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strMinusPath, false));
-        NodeList numMinusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numMinusPath, false));
-        NodeList ipMinusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipMinusPath, false));
+        NodeList autoMinusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoMinusPath, false));
+        NodeList strMinusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strMinusPath, false));
+        NodeList numMinusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numMinusPath, false));
+        NodeList ipMinusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipMinusPath, false));
 
         // Check that the correct amount of nodes is found
-        assertEquals(1,sortNode.getLength());
+        assertEquals(1, sortNode.getLength());
 
-        assertEquals(1,autoNode.getLength());
-        assertEquals(1,strNode.getLength());
-        assertEquals(1,numNode.getLength());
-        assertEquals(1,ipNode.getLength());
+        assertEquals(1, autoNode.getLength());
+        assertEquals(1, strNode.getLength());
+        assertEquals(1, numNode.getLength());
+        assertEquals(1, ipNode.getLength());
 
-        assertEquals(1,autoMinusNode.getLength());
-        assertEquals(1,strMinusNode.getLength());
-        assertEquals(1,numMinusNode.getLength());
-        assertEquals(1,ipMinusNode.getLength());
+        assertEquals(1, autoMinusNode.getLength());
+        assertEquals(1, strMinusNode.getLength());
+        assertEquals(1, numMinusNode.getLength());
+        assertEquals(1, ipMinusNode.getLength());
     }
-
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -270,29 +287,37 @@ public class SortSyntaxTests {
         String ipPlusPath = "/root/transformStatement/sortTransformation/t_sort_sortByClauseInstruction/t_sort_byMethodIp/t_sortPlusOption";
 
         // Get the list of nodes in a specific parse tree path
-        NodeList sortNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
+        NodeList sortNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sortPath, false));
 
-        NodeList autoNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPath, false));
-        NodeList strNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPath, false));
-        NodeList numNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPath, false));
+        NodeList autoNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPath, false));
+        NodeList strNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPath, false));
+        NodeList numNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPath, false));
         NodeList ipNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipPath, false));
 
-        NodeList autoPlusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPlusPath, false));
-        NodeList strPlusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPlusPath, false));
-        NodeList numPlusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPlusPath, false));
-        NodeList ipPlusNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipPlusPath, false));
+        NodeList autoPlusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, autoPlusPath, false));
+        NodeList strPlusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, strPlusPath, false));
+        NodeList numPlusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numPlusPath, false));
+        NodeList ipPlusNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, ipPlusPath, false));
 
         // Check that the correct amount of nodes is found
-        assertEquals(1,sortNode.getLength());
+        assertEquals(1, sortNode.getLength());
 
-        assertEquals(1,autoNode.getLength());
-        assertEquals(1,strNode.getLength());
-        assertEquals(1,numNode.getLength());
-        assertEquals(1,ipNode.getLength());
+        assertEquals(1, autoNode.getLength());
+        assertEquals(1, strNode.getLength());
+        assertEquals(1, numNode.getLength());
+        assertEquals(1, ipNode.getLength());
 
-        assertEquals(1,autoPlusNode.getLength());
-        assertEquals(1,strPlusNode.getLength());
-        assertEquals(1,numPlusNode.getLength());
-        assertEquals(1,ipPlusNode.getLength());
+        assertEquals(1, autoPlusNode.getLength());
+        assertEquals(1, strPlusNode.getLength());
+        assertEquals(1, numPlusNode.getLength());
+        assertEquals(1, ipPlusNode.getLength());
     }
 }

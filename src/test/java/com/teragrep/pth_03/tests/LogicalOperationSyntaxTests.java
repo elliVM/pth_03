@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -60,8 +60,7 @@ public class LogicalOperationSyntaxTests {
     })
     void missingBracketTest(String arg) {
         String fileName = "src/test/resources/antlr4/logicalOperations/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
 
         // Invalid syntax should throw an exception.
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));
@@ -73,8 +72,7 @@ public class LogicalOperationSyntaxTests {
     })
     void missingClosingBracketTest(String arg) {
         String fileName = "src/test/resources/antlr4/logicalOperations/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
 
         // Invalid syntax should throw an exception.
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));
@@ -86,22 +84,20 @@ public class LogicalOperationSyntaxTests {
     })
     void invalidCharactersTest(String arg) {
         String fileName = "src/test/resources/antlr4/logicalOperations/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
 
         // Invalid syntax should throw an exception.
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
 
-    @Disabled(value="pth-03 issue #76")
+    @Disabled(value = "pth-03 issue #76")
     @ParameterizedTest
     @ValueSource(strings = {
             "unbalancedQuotes",
     })
     void unbalancedQuotesTest(String arg) {
         String fileName = "src/test/resources/antlr4/logicalOperations/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
 
         // Invalid syntax should throw an exception.
         Assertions.assertThrows(InvocationTargetException.class, () -> parserSyntaxTestingUtility.syntaxParseTest(arg));

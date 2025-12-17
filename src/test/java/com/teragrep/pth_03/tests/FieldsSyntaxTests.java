@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -48,31 +48,26 @@ package com.teragrep.pth_03.tests;
 import com.teragrep.pth_03.ParserStructureTestingUtility;
 import com.teragrep.pth_03.ParserSyntaxTestingUtility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.w3c.dom.NodeList;
 
 public final class FieldsSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
-            "fields",
-            "fields2",
-            "fields_wildcard"
+            "fields", "fields2", "fields_wildcard"
     })
     void fieldsSyntaxParseTest(final String arg) throws Exception {
         final String fileName = "src/test/resources/antlr4/commands/fields/" + arg + ".txt";
-        final ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        final ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
-            "fields",
-            "fields2",
-            "fields_wildcard"
+            "fields", "fields2", "fields_wildcard"
     })
     void testFieldsTransformationExists(final String arg) throws Exception {
         final ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
@@ -81,8 +76,9 @@ public final class FieldsSyntaxTests {
 
         final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
-        Assertions.assertEquals(1,nodesA.getLength());
+        Assertions.assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "fields",
@@ -94,18 +90,19 @@ public final class FieldsSyntaxTests {
 
         final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 3 found
-        Assertions.assertEquals(3,nodesA.getLength());
-        Assertions.assertEquals("foo_*",nodesA.item(0).getTextContent());
-        Assertions.assertEquals("bar_*",nodesA.item(1).getTextContent());
-        Assertions.assertEquals("eawg",nodesA.item(2).getTextContent());
+        Assertions.assertEquals(3, nodesA.getLength());
+        Assertions.assertEquals("foo_*", nodesA.item(0).getTextContent());
+        Assertions.assertEquals("bar_*", nodesA.item(1).getTextContent());
+        Assertions.assertEquals("eawg", nodesA.item(2).getTextContent());
 
         final String xpathExpPlus = "/root/transformStatement/fieldsTransformation/value";
 
         final NodeList nodesB = (NodeList) pstu.xpathQueryFile(fileName, xpathExpPlus, false);
-        Assertions.assertEquals(2,nodesB.getLength());
-        Assertions.assertEquals("fields",nodesB.item(0).getTextContent());
-        Assertions.assertEquals("+",nodesB.item(1).getTextContent());
+        Assertions.assertEquals(2, nodesB.getLength());
+        Assertions.assertEquals("fields", nodesB.item(0).getTextContent());
+        Assertions.assertEquals("+", nodesB.item(1).getTextContent());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "fields2",
@@ -117,16 +114,16 @@ public final class FieldsSyntaxTests {
 
         final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 2 found
-        Assertions.assertEquals(2,nodesA.getLength());
-        Assertions.assertEquals("host",nodesA.item(0).getTextContent());
-        Assertions.assertEquals("ip",nodesA.item(1).getTextContent());
+        Assertions.assertEquals(2, nodesA.getLength());
+        Assertions.assertEquals("host", nodesA.item(0).getTextContent());
+        Assertions.assertEquals("ip", nodesA.item(1).getTextContent());
 
         final String xpathExpPlus = "/root/transformStatement/fieldsTransformation/value";
 
         final NodeList nodesB = (NodeList) pstu.xpathQueryFile(fileName, xpathExpPlus, false);
-        Assertions.assertEquals(2,nodesB.getLength());
-        Assertions.assertEquals("fields",nodesB.item(0).getTextContent());
-        Assertions.assertEquals("-",nodesB.item(1).getTextContent());
+        Assertions.assertEquals(2, nodesB.getLength());
+        Assertions.assertEquals("fields", nodesB.item(0).getTextContent());
+        Assertions.assertEquals("-", nodesB.item(1).getTextContent());
     }
 
     @ParameterizedTest
@@ -140,15 +137,15 @@ public final class FieldsSyntaxTests {
 
         final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 3 found
-        Assertions.assertEquals(3,nodesA.getLength());
-        Assertions.assertEquals("*",nodesA.item(0).getTextContent());
-        Assertions.assertEquals("*_foo",nodesA.item(1).getTextContent());
-        Assertions.assertEquals("bar",nodesA.item(2).getTextContent());
+        Assertions.assertEquals(3, nodesA.getLength());
+        Assertions.assertEquals("*", nodesA.item(0).getTextContent());
+        Assertions.assertEquals("*_foo", nodesA.item(1).getTextContent());
+        Assertions.assertEquals("bar", nodesA.item(2).getTextContent());
 
         final String xpathExpPlus = "/root/transformStatement/fieldsTransformation/value";
 
         final NodeList nodesB = (NodeList) pstu.xpathQueryFile(fileName, xpathExpPlus, false);
-        Assertions.assertEquals(1,nodesB.getLength());
-        Assertions.assertEquals("fields",nodesB.item(0).getTextContent());
+        Assertions.assertEquals(1, nodesB.getLength());
+        Assertions.assertEquals("fields", nodesB.item(0).getTextContent());
     }
 }

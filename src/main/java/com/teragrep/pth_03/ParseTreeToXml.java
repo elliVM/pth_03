@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -67,6 +67,7 @@ import java.util.List;
 import static org.antlr.v4.runtime.tree.ParseTreeWalker.DEFAULT;
 
 public class ParseTreeToXml {
+
     Document doc = null;
 
     public ParseTreeToXml(DPLParser parser, ParseTree tree) throws ParserConfigurationException {
@@ -77,6 +78,7 @@ public class ParseTreeToXml {
         //System.out.println("Init ParseTree using ParseTreeWalker:");
         List<Element> retval = new ArrayList<>();
         DEFAULT.walk(new DPLParserBaseListener() {
+
             final String INDENT = "    ";
             int level = 0;
             Element current = null;
@@ -87,9 +89,10 @@ public class ParseTreeToXml {
                 ++level;
                 Element el = doc.createElement(elementTag);
                 // step deeper
-                if (current == null ){
+                if (current == null) {
                     doc.appendChild(el);
-                } else {
+                }
+                else {
                     current.appendChild(el);
                 }
                 current = el;
@@ -100,9 +103,10 @@ public class ParseTreeToXml {
             public void exitEveryRule(final ParserRuleContext ctx) {
                 --level;
                 super.exitEveryRule(ctx);
-                if(level>0) {
+                if (level > 0) {
                     current = (Element) current.getParentNode();
-                } else {
+                }
+                else {
                     // Back to root level, clear current.
                     current = null;
                 }
@@ -118,7 +122,8 @@ public class ParseTreeToXml {
                     if (terminal.equals("<EOF>")) {
                         // Set terminal instead of value
                         el = doc.createElement("EOF");
-                    }else {
+                    }
+                    else {
                         el = doc.createElement("value");
                         el.setTextContent(terminal);
                     }
@@ -131,7 +136,7 @@ public class ParseTreeToXml {
         // After this, doc contains DOM representation and toString uses transformer to represent it as string
     }
 
-    public Document asDomDocument(){
+    public Document asDomDocument() {
         return doc;
     }
 
@@ -144,11 +149,12 @@ public class ParseTreeToXml {
             StringWriter buffer = new StringWriter();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.transform(new DOMSource(el),
-                    new StreamResult(buffer));
+            transformer.transform(new DOMSource(el), new StreamResult(buffer));
             str = buffer.toString();
-        } catch (TransformerConfigurationException tex) {
-        } catch (TransformerException ex) {
+        }
+        catch (TransformerConfigurationException tex) {
+        }
+        catch (TransformerException ex) {
         }
         return str;
     }
@@ -165,9 +171,11 @@ public class ParseTreeToXml {
             Writer out = new StringWriter();
             tf.transform(new DOMSource(doc), new StreamResult(out));
             return out.toString();
-        } catch (TransformerConfigurationException e) {
+        }
+        catch (TransformerConfigurationException e) {
             e.printStackTrace();
-        } catch (TransformerException e) {
+        }
+        catch (TransformerException e) {
             e.printStackTrace();
         }
         return null;

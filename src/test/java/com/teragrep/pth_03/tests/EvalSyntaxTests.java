@@ -1,6 +1,6 @@
 /*
- * Teragrep Data Processing Language Parser Library PTH-03
- * Copyright (C) 2019-2026  Suomen Kanuuna Oy
+ * Data Processing Language (DPL) parser
+ * Copyright (C) 2025 Suomen Kanuuna Oy
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -13,7 +13,7 @@
  * GNU Affero General Public License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <https://github.com/teragrep/teragrep/blob/main/LICENSE>.
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  *
  * Additional permission under GNU Affero General Public License version 3
@@ -58,6 +58,7 @@ import org.w3c.dom.NodeList;
 import java.lang.reflect.InvocationTargetException;
 
 public class EvalSyntaxTests {
+
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
             "eval",
@@ -84,11 +85,11 @@ public class EvalSyntaxTests {
     })
     public void evalSyntaxParseTest(String arg) {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
-                = new ParserSyntaxTestingUtility(fileName, false);
+        ParserSyntaxTestingUtility parserSyntaxTestingUtility = new ParserSyntaxTestingUtility(fileName, false);
         Assertions.assertDoesNotThrow(() -> parserSyntaxTestingUtility.syntaxParseTest(arg));
     }
-//    FIXME XML is incomplete for test cases with multiple <field>=<expression> statements. Only the first statement shows up in the XMLs.
+
+    //    FIXME XML is incomplete for test cases with multiple <field>=<expression> statements. Only the first statement shows up in the XMLs.
     @ParameterizedTest
     @ValueSource(strings = {
             "eval",
@@ -98,10 +99,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval",
@@ -111,10 +114,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/fieldType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 2 found, because query has two fieldTypes
         assertEquals(2, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval",
@@ -124,10 +129,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalStatement[1]/evalNumberType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval2",
@@ -137,10 +144,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalStringType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval3",
@@ -150,10 +159,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval4",
@@ -163,10 +174,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalStatement[1]/evalStatement[1]/evalFieldType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 2 found
         assertEquals(2, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval4",
@@ -176,10 +189,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalStatement[1]/evalStatement[2]/evalStringType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval6",
@@ -189,10 +204,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement/evalStatement[1]/evalFunctionStatement/evalMethodSubstr/evalStatement[1]/evalFieldType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval6",
@@ -202,10 +219,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement/evalStatement[1]/evalFunctionStatement/evalMethodSubstr/evalStatement[2]/evalNumberType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval6",
@@ -215,10 +234,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement[1]/evalStatement[2]/evalStringType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval6",
@@ -228,10 +249,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement[2]/evalFunctionStatement/evalMethodLen/evalStatement/evalFieldType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval6",
@@ -241,10 +264,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement[3]/evalFunctionStatement/evalMethodFalse/value[1]";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval7",
@@ -254,10 +279,12 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement[1]/evalFunctionStatement/evalMethodTrue/value[1]";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
+
     @ParameterizedTest
     @ValueSource(strings = {
             "eval7",
@@ -267,9 +294,10 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodIf/evalStatement[2]/evalStringType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -281,24 +309,25 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodTonumber/evalStatement[1]/evalStringType/value";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "eval_ceiling",
-            "eval_ceil"
+            "eval_ceiling", "eval_ceil"
     })
     void xpathTest16(String arg) {
         ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodCeiling/evalStatement/evalNumberType";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -310,9 +339,10 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodRound/evalStatement/evalNumberType";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found (number)
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -324,9 +354,10 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodRound/evalStatement/evalNumberType";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 2 found (number, precision)
-        assertEquals(2,nodesA.getLength());
+        assertEquals(2, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -338,9 +369,10 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodLog/evalStatement";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        assertEquals(1, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -352,9 +384,10 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodLog/evalStatement";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 2 found (number, base)
-        assertEquals(2,nodesA.getLength());
+        assertEquals(2, nodesA.getLength());
     }
 
     @ParameterizedTest
@@ -366,7 +399,8 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodSubstr/evalStatement";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 3 found (string, start, end)
         assertEquals(3, nodesA.getLength());
     }
@@ -380,7 +414,8 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodSubstr/evalStatement";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 2 found (string, start)
         assertEquals(2, nodesA.getLength());
     }
@@ -394,7 +429,8 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 2 found (a=<evalStatement> and b=<evalStatement>)
         assertEquals(2, nodesA.getLength());
     }
@@ -410,15 +446,18 @@ public class EvalSyntaxTests {
         String xpathExp1 = "/root/transformStatement/evalTransformation/t_eval_evalParameter[1]/evalStatement/evalFunctionStatement/evalMethodRound";
         String xpathExp2 = "/root/transformStatement/evalTransformation/t_eval_evalParameter[2]/evalStatement/evalFunctionStatement/evalMethodExact";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp0, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp0, false));
         // Check that 2 found (a=<evalStatement> and b=<evalStatement>)
         assertEquals(2, nodesA.getLength());
 
-        NodeList nodesB = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp1, false));
+        NodeList nodesB = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp1, false));
         // Check that 1 found (evalMethodRound)
         assertEquals(1, nodesB.getLength());
 
-        NodeList nodesC = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp2, false));
+        NodeList nodesC = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp2, false));
         // Check that 1 found (evalMethodExact)
         assertEquals(1, nodesC.getLength());
     }
@@ -432,7 +471,8 @@ public class EvalSyntaxTests {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
         String xpathExp = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodValidate/evalStatement[5]/evalFunctionStatement/evalMethodIsnull";
 
-        NodeList nodesA = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
+        NodeList nodesA = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false));
         // Check that 1 found
         assertEquals(1, nodesA.getLength());
     }
@@ -451,19 +491,24 @@ public class EvalSyntaxTests {
         String numberParam = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodAvg/evalStatement[2]/evalNumberType";
         String stringParam = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodAvg/evalStatement[3]/evalStringType";
 
-        NodeList avgNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, avgMethod, false));
+        NodeList avgNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, avgMethod, false));
         assertEquals(1, avgNode.getLength());
-      
-        NodeList evalStmts = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, parameters, false));
+
+        NodeList evalStmts = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, parameters, false));
         assertEquals(3, evalStmts.getLength());
 
-        NodeList fieldNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, fieldParam, false));
+        NodeList fieldNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, fieldParam, false));
         assertEquals(1, fieldNode.getLength());
-      
-        NodeList numberNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numberParam, false));
+
+        NodeList numberNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numberParam, false));
         assertEquals(1, numberNode.getLength());
 
-        NodeList stringNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, stringParam, false));
+        NodeList stringNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, stringParam, false));
         assertEquals(1, stringNode.getLength());
     }
 
@@ -481,19 +526,24 @@ public class EvalSyntaxTests {
         String numberParam1 = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodSum/evalStatement[2]/evalNumberType";
         String numberParam2 = "/root/transformStatement/evalTransformation/t_eval_evalParameter/evalStatement/evalFunctionStatement/evalMethodSum/evalStatement[2]/evalNumberType";
 
-        NodeList sumNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sumMethod, false));
+        NodeList sumNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, sumMethod, false));
         assertEquals(1, sumNode.getLength());
 
-        NodeList evalStmts = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, parameters, false));
+        NodeList evalStmts = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, parameters, false));
         assertEquals(3, evalStmts.getLength());
 
-        NodeList fieldNode = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, fieldParam, false));
+        NodeList fieldNode = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, fieldParam, false));
         assertEquals(1, fieldNode.getLength());
 
-        NodeList numberNode1 = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numberParam1, false));
+        NodeList numberNode1 = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numberParam1, false));
         assertEquals(1, numberNode1.getLength());
 
-        NodeList numberNode2 = Assertions.assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numberParam2, false));
+        NodeList numberNode2 = Assertions
+                .assertDoesNotThrow(() -> (NodeList) pstu.xpathQueryFile(fileName, numberParam2, false));
         assertEquals(1, numberNode2.getLength());
     }
 
@@ -503,7 +553,7 @@ public class EvalSyntaxTests {
     })
     void missingParameterInIfTest(String arg) {
         String fileName = "src/test/resources/antlr4/commands/eval/" + arg + ".txt";
-        ParserSyntaxTestingUtility pstu = new ParserSyntaxTestingUtility(fileName,false);
+        ParserSyntaxTestingUtility pstu = new ParserSyntaxTestingUtility(fileName, false);
 
         // Invalid syntax should throw an exception.
         Assertions.assertThrows(InvocationTargetException.class, () -> pstu.syntaxParseTest(arg));
