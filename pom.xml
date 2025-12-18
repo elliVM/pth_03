@@ -292,6 +292,7 @@
         <version>2.30.0</version>
         <configuration>
           <java>
+            <toggleOffOn></toggleOffOn>
             <eclipse>
               <file>${project.basedir}/eclipse-java-formatter.xml</file>
               <version>4.10.0</version>
@@ -302,6 +303,7 @@
             </licenseHeader>
           </java>
           <antlr4>
+            <toggleOffOn></toggleOffOn>
             <licenseHeader>
               <file>${project.basedir}/license-header</file>
             </licenseHeader>
