@@ -53,6 +53,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -93,6 +94,7 @@ public final class AdminSyntaxTests {
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
             "| admin migrate epoch table=\"example\"",
+            "| admin migrate epoch table=\"\"",
             "| admin migrate epoch table \"example\"",
             "| admin migrate epoch TABLE=\"example\"",
             "| admin migrate epoch TABLE \"example\"",
@@ -112,6 +114,7 @@ public final class AdminSyntaxTests {
     @ValueSource(strings = {
             "| admin migrate epoch",
             "| admin migrate epoch table=\"example\"",
+            "| admin migrate epoch table=\"\"",
             "| admin migrate epoch table \"example\"",
             "| admin migrate epoch TABLE=\"example\"",
             "| admin migrate epoch TABLE \"example\"",
@@ -120,6 +123,25 @@ public final class AdminSyntaxTests {
     })
     public void adminMigrateEpochSyntaxParseTest(final String command) {
         Assertions.assertDoesNotThrow(() -> {
+            final CharStream input = CharStreams.fromString(command);
+            final DPLLexer lexer = new DPLLexer(input);
+            final DPLParser parser = new DPLParser(new CommonTokenStream(lexer));
+            parser.setErrorHandler(new BailErrorStrategy()); // first syntax error aborts parsing
+            final DPLParser.RootContext root = parser.root();
+            Assertions.assertNotNull(root);
+            Assertions.assertEquals(0, parser.getNumberOfSyntaxErrors());
+        });
+    }
+
+    @ParameterizedTest(name = "{index} command = ''{0}''")
+    @ValueSource(strings = {
+            "| admin",
+            "| admin migrate",
+            "| admin migrate epoch table",
+            "| admin migrate epoch table=",
+    })
+    public void testInvalidSyntaxThrows(final String command) {
+        Assertions.assertThrows(ParseCancellationException.class, () -> {
             final CharStream input = CharStreams.fromString(command);
             final DPLLexer lexer = new DPLLexer(input);
             final DPLParser parser = new DPLParser(new CommonTokenStream(lexer));
