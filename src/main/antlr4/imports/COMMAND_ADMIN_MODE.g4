@@ -55,10 +55,10 @@ COMMAND_ADMIN_MODE_PIPE : '|' -> type(PIPE), popMode ;
 
 // case insensitive words
 //admin
-COMMAND_ADMIN_MODE_ADMIN   : [aA][dD][mM][iI][nN] ;
+COMMAND_ADMIN_MODE_ADMIN : [aA][dD][mM][iI][nN] ;
 // migrate
 COMMAND_ADMIN_MODE_MIGRATE : [mM][iI][gG][rR][aA][tT][eE] ;
 // epoch
-COMMAND_ADMIN_MODE_EPOCH   : [eE][pP][oO][cC][hH] ;
+COMMAND_ADMIN_MODE_EPOCH : [eE][pP][oO][cC][hH] ;
 // table option
 COMMAND_ADMIN_MODE_TABLE : [tT][aA][bB][lL][eE] '='? -> pushMode(GET_STRING) ;

@@ -69,10 +69,12 @@ public final class AdminSyntaxTests {
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
             "| admin migrate epoch table=\"example\"",
+            "| admin migrate epoch table='example'",
             "| admin migrate epoch table \"example\"",
             "| admin migrate epoch TABLE=\"example\"",
             "| admin migrate epoch TABLE \"example\"",
             "| admin migrate epoch table example",
+            "| admin migrate epoch table 'example'",
             "| admin migrate epoch table=example",
     })
     void testMigrateCommandTokenStrings(final String command) {
@@ -84,7 +86,7 @@ public final class AdminSyntaxTests {
                 .filter(t -> t.getChannel() == Token.DEFAULT_CHANNEL)
                 .map(Token::getText)
                 .map(s -> s.toLowerCase(Locale.ROOT))
-                .map(s -> s.replace("\"", ""))
+                .map(s -> s.replace("\"", "").replace("'", "")) // remove quotes
                 .map(s -> s.replace("table=", "table")) // semantically equal
                 .collect(Collectors.toList());
         final List<String> expectedTokenStrings = Arrays.asList("|", "admin", "migrate", "epoch", "table", "example", "<eof>");
@@ -94,11 +96,13 @@ public final class AdminSyntaxTests {
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
             "| admin migrate epoch table=\"example\"",
+            "| admin migrate epoch table='example'",
             "| admin migrate epoch table=\"\"",
             "| admin migrate epoch table \"example\"",
             "| admin migrate epoch TABLE=\"example\"",
             "| admin migrate epoch TABLE \"example\"",
             "| admin migrate epoch table example",
+            "| admin migrate epoch table 'example'",
             "| admin migrate epoch table=example",
     })
     public void testMigrateCommandStructure(final String command) {
@@ -114,11 +118,13 @@ public final class AdminSyntaxTests {
     @ValueSource(strings = {
             "| admin migrate epoch",
             "| admin migrate epoch table=\"example\"",
+            "| admin migrate epoch table='example'",
             "| admin migrate epoch table=\"\"",
             "| admin migrate epoch table \"example\"",
             "| admin migrate epoch TABLE=\"example\"",
             "| admin migrate epoch TABLE \"example\"",
             "| admin migrate epoch table example",
+            "| admin migrate epoch table 'example'",
             "| admin migrate epoch table=example",
     })
     public void adminMigrateEpochSyntaxParseTest(final String command) {
