@@ -47,6 +47,8 @@ package com.teragrep.pth_03.tests;
 
 import com.teragrep.pth_03.ParserStructureTestingUtility;
 import com.teragrep.pth_03.antlr.DPLLexer;
+import com.teragrep.pth_03.antlr.DPLParser;
+import org.antlr.v4.runtime.BailErrorStrategy;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -72,7 +74,7 @@ public final class AdminSyntaxTests {
             "| admin migrate epoch table example",
             "| admin migrate epoch table=example",
     })
-    void testTokenStrings(final String command) {
+    void testMigrateCommandTokenStrings(final String command) {
         final CharStream input = CharStreams.fromString(command);
         final DPLLexer lexer = new DPLLexer(input);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -97,12 +99,34 @@ public final class AdminSyntaxTests {
             "| admin migrate epoch table example",
             "| admin migrate epoch table=example",
     })
-    public void testParsedStructure(final String command) {
+    public void testMigrateCommandStructure(final String command) {
         final ParserStructureTestingUtility util = new ParserStructureTestingUtility();
-        final String hierarchyXPath = "/root/transformStatement/adminTransformation/t_adminParameter/t_adminMode/t_migrateSubParameter/t_epochArgs/tableOption/stringType\n";
+        final String hierarchyXPath = "/root/transformStatement/adminTransformation/t_adminMode/t_migrateCommand/t_migrateSubParameter/t_epochArgs/tableOption/stringType\n";
         final Object hierarchyResult = Assertions.assertDoesNotThrow(() -> util.xpathQuery(command, hierarchyXPath, false));
         final NodeList hierarchyNodes = (NodeList) hierarchyResult;
         Assertions.assertEquals(1, hierarchyNodes.getLength(),
                 "Expected exactly one stringType node in parse tree");
+    }
+
+    @ParameterizedTest(name = "{index} command = ''{0}''")
+    @ValueSource(strings = {
+            "| admin migrate epoch",
+            "| admin migrate epoch table=\"example\"",
+            "| admin migrate epoch table \"example\"",
+            "| admin migrate epoch TABLE=\"example\"",
+            "| admin migrate epoch TABLE \"example\"",
+            "| admin migrate epoch table example",
+            "| admin migrate epoch table=example",
+    })
+    public void adminMigrateEpochSyntaxParseTest(final String command) {
+        Assertions.assertDoesNotThrow(() -> {
+            final CharStream input = CharStreams.fromString(command);
+            final DPLLexer lexer = new DPLLexer(input);
+            final DPLParser parser = new DPLParser(new CommonTokenStream(lexer));
+            parser.setErrorHandler(new BailErrorStrategy()); // first syntax error aborts parsing
+            final DPLParser.RootContext root = parser.root();
+            Assertions.assertNotNull(root);
+            Assertions.assertEquals(0, parser.getNumberOfSyntaxErrors());
+        });
     }
 }
