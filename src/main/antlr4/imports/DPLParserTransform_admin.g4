@@ -45,11 +45,11 @@
  */
 parser grammar DPLParserTransform_admin;
 
-adminTransformation : COMMAND_MODE_ADMIN t_adminParameter;
+adminTransformation : COMMAND_MODE_ADMIN t_adminMode;
 
-t_adminParameter : COMMAND_ADMIN_MODE_ADMIN t_adminMode;
+t_adminMode : t_migrateCommand;
 
-t_adminMode : COMMAND_ADMIN_MODE_MIGRATE t_migrateSubParameter?;
+t_migrateCommand : COMMAND_ADMIN_MODE_MIGRATE t_migrateSubParameter;
 
 t_migrateSubParameter : COMMAND_ADMIN_MODE_EPOCH t_epochArgs?;
 
