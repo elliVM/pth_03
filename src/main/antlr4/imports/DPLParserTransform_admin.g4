@@ -49,11 +49,7 @@ adminTransformation : COMMAND_MODE_ADMIN t_adminMode;
 
 t_adminMode : t_migrateCommand;
 
-t_migrateCommand : COMMAND_ADMIN_MODE_MIGRATE t_migrateSubParameter;
-
-t_migrateSubParameter : COMMAND_ADMIN_MODE_EPOCH t_epochArgs?;
-
-t_epochArgs : tableOption?;
+t_migrateCommand : COMMAND_ADMIN_MODE_MIGRATE COMMAND_ADMIN_MODE_EPOCH tableOption?;
 
 tableOption :  COMMAND_ADMIN_MODE_TABLE stringType;
 

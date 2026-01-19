@@ -107,7 +107,7 @@ public final class AdminSyntaxTests {
     })
     public void testMigrateCommandStructure(final String command) {
         final ParserStructureTestingUtility util = new ParserStructureTestingUtility();
-        final String hierarchyXPath = "/root/transformStatement/adminTransformation/t_adminMode/t_migrateCommand/t_migrateSubParameter/t_epochArgs/tableOption/stringType\n";
+        final String hierarchyXPath = "/root/transformStatement/adminTransformation/t_adminMode/t_migrateCommand/tableOption/stringType\n";
         final Object hierarchyResult = Assertions.assertDoesNotThrow(() -> util.xpathQuery(command, hierarchyXPath, false));
         final NodeList hierarchyNodes = (NodeList) hierarchyResult;
         Assertions.assertEquals(1, hierarchyNodes.getLength(),
