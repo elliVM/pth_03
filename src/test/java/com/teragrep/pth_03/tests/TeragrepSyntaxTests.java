@@ -47,10 +47,23 @@ package com.teragrep.pth_03.tests;
 
 import com.teragrep.pth_03.ParserStructureTestingUtility;
 import com.teragrep.pth_03.ParserSyntaxTestingUtility;
+import com.teragrep.pth_03.antlr.DPLLexer;
+import com.teragrep.pth_03.antlr.DPLParser;
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.w3c.dom.NodeList;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -557,5 +570,95 @@ public class TeragrepSyntaxTests {
         Assertions.assertEquals(2, configGetNodes.getLength());
         Assertions.assertEquals("get", configGetNodes.item(0).getTextContent());
         Assertions.assertEquals("config", configGetNodes.item(1).getTextContent());
+    }
+
+    @ParameterizedTest(name = "{index} command = ''{0}''")
+    @ValueSource(strings = {
+            "| teragrep exec  migrate epoch table=\"example\"",
+            "| teragrep exec  migrate epoch table='example'",
+            "| teragrep exec  migrate epoch table \"example\"",
+            "| teragrep exec  migrate epoch TABLE=\"example\"",
+            "| teragrep exec  migrate epoch TABLE \"example\"",
+            "| teragrep exec  migrate epoch table example",
+            "| teragrep exec  migrate epoch table 'example'",
+            "| teragrep exec  migrate epoch table=example",
+    })
+    void testMigrateCommandTokenStrings(final String command) {
+        final CharStream input = CharStreams.fromString(command);
+        final DPLLexer lexer = new DPLLexer(input);
+        final CommonTokenStream tokens = new CommonTokenStream(lexer);
+        tokens.fill();
+        final List<String> tokenStrings = tokens.getTokens().stream()
+                .filter(t -> t.getChannel() == Token.DEFAULT_CHANNEL)
+                .map(Token::getText)
+                .map(s -> s.toLowerCase(Locale.ROOT))
+                .map(s -> s.replace("\"", "").replace("'", "")) // remove quotes
+                .map(s -> s.replace("table=", "table")) // semantically equal
+                .collect(Collectors.toList());
+        final List<String> expectedTokenStrings = Arrays.asList("|", "teragrep", "exec", "migrate", "epoch", "table", "example", "<eof>");
+        Assertions.assertEquals(expectedTokenStrings, tokenStrings);
+    }
+
+    @ParameterizedTest(name = "{index} command = ''{0}''")
+    @ValueSource(strings = {
+            "| teragrep exec migrate epoch table=\"example\"",
+            "| teragrep exec migrate epoch table='example'",
+            "| teragrep exec migrate epoch table=\"\"",
+            "| teragrep exec migrate epoch table \"example\"",
+            "| teragrep exec migrate epoch TABLE=\"example\"",
+            "| teragrep exec migrate epoch TABLE \"example\"",
+            "| teragrep exec migrate epoch table example",
+            "| teragrep exec migrate epoch table 'example'",
+            "| teragrep exec migrate epoch table=example",
+    })
+    public void testMigrateCommandStructure(final String command) {
+        final ParserStructureTestingUtility util = new ParserStructureTestingUtility();
+        final String hierarchyXPath = "/root/transformStatement/teragrepTransformation/t_execParameter/t_migrateParameter/t_tableParameter/fieldType\n";
+        final Object hierarchyResult = Assertions.assertDoesNotThrow(() -> util.xpathQuery(command, hierarchyXPath, false));
+        final NodeList hierarchyNodes = (NodeList) hierarchyResult;
+        Assertions.assertEquals(1, hierarchyNodes.getLength(),
+                "Expected exactly one stringType node in parse tree with input <" + command + ">");
+    }
+
+    @ParameterizedTest(name = "{index} command = ''{0}''")
+    @ValueSource(strings = {
+            "| teragrep exec migrate epoch",
+            "| teragrep exec migrate epoch table=\"example\"",
+            "| teragrep exec migrate epoch table='example'",
+            "| teragrep exec migrate epoch table=\"\"",
+            "| teragrep exec migrate epoch table \"example\"",
+            "| teragrep exec migrate epoch TABLE=\"example\"",
+            "| teragrep exec migrate epoch TABLE \"example\"",
+            "| teragrep exec migrate epoch table example",
+            "| teragrep exec migrate epoch table 'example'",
+            "| teragrep exec migrate epoch table=example",
+    })
+    public void adminMigrateEpochSyntaxParseTest(final String command) {
+        Assertions.assertDoesNotThrow(() -> {
+            final CharStream input = CharStreams.fromString(command);
+            final DPLLexer lexer = new DPLLexer(input);
+            final DPLParser parser = new DPLParser(new CommonTokenStream(lexer));
+            parser.setErrorHandler(new BailErrorStrategy()); // first syntax error aborts parsing
+            final DPLParser.RootContext root = parser.root();
+            Assertions.assertNotNull(root);
+            Assertions.assertEquals(0, parser.getNumberOfSyntaxErrors());
+        });
+    }
+
+    @ParameterizedTest(name = "{index} command = ''{0}''")
+    @ValueSource(strings = {
+            "| teragrep exec",
+            "| teragrep exec migrate",
+            "| teragrep exec migrate epoch table",
+            "| teragrep exec migrate epoch table=",
+    })
+    public void testInvalidSyntaxThrows(final String command) {
+        Assertions.assertThrows(ParseCancellationException.class, () -> {
+            final CharStream input = CharStreams.fromString(command);
+            final DPLLexer lexer = new DPLLexer(input);
+            final DPLParser parser = new DPLParser(new CommonTokenStream(lexer));
+            parser.setErrorHandler(new BailErrorStrategy()); // first syntax error aborts parsing
+            parser.root();
+        });
     }
 }

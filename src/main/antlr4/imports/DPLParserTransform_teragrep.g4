@@ -61,7 +61,8 @@ t_execParameter
         | t_tokenizerParameter
         | t_regexextractParameter
         | t_dynatraceParameter
-        | t_forEachBatchParameter)
+        | t_forEachBatchParameter
+        | t_migrateParameter)
         ;
 
 t_forEachBatchParameter
@@ -210,3 +211,8 @@ t_retentionParameter
 t_codecParameter
         : COMMAND_TERAGREP_MODE_CODEC stringType
         ;
+
+t_migrateParameter
+        : COMMAND_TERAGREP_MODE_MIGRATE COMMAND_TERAGREP_MODE_EPOCH t_tableParameter?
+        ;
+
