@@ -574,14 +574,8 @@ public class TeragrepSyntaxTests {
 
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
-            "| teragrep exec  migrate epoch table=\"example\"",
-            "| teragrep exec  migrate epoch table='example'",
-            "| teragrep exec  migrate epoch table \"example\"",
-            "| teragrep exec  migrate epoch TABLE=\"example\"",
-            "| teragrep exec  migrate epoch TABLE \"example\"",
-            "| teragrep exec  migrate epoch table example",
-            "| teragrep exec  migrate epoch table 'example'",
-            "| teragrep exec  migrate epoch table=example",
+            "| teragrep exec migrate epoch",
+            "| teragrep exec MIGRATE EPOCH"
     })
     void testMigrateCommandTokenStrings(final String command) {
         final CharStream input = CharStreams.fromString(command);
@@ -593,45 +587,28 @@ public class TeragrepSyntaxTests {
                 .map(Token::getText)
                 .map(s -> s.toLowerCase(Locale.ROOT))
                 .map(s -> s.replace("\"", "").replace("'", "")) // remove quotes
-                .map(s -> s.replace("table=", "table")) // semantically equal
                 .collect(Collectors.toList());
-        final List<String> expectedTokenStrings = Arrays.asList("|", "teragrep", "exec", "migrate", "epoch", "table", "example", "<eof>");
+        final List<String> expectedTokenStrings = Arrays.asList("|", "teragrep", "exec", "migrate", "epoch", "<eof>");
         Assertions.assertEquals(expectedTokenStrings, tokenStrings);
     }
 
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
-            "| teragrep exec migrate epoch table=\"example\"",
-            "| teragrep exec migrate epoch table='example'",
-            "| teragrep exec migrate epoch table=\"\"",
-            "| teragrep exec migrate epoch table \"example\"",
-            "| teragrep exec migrate epoch TABLE=\"example\"",
-            "| teragrep exec migrate epoch TABLE \"example\"",
-            "| teragrep exec migrate epoch table example",
-            "| teragrep exec migrate epoch table 'example'",
-            "| teragrep exec migrate epoch table=example",
+            "| teragrep exec migrate epoch",
+            "| teragrep exec MIGRATE EPOCH"
     })
-    public void testMigrateCommandStructure(final String command) {
+    public void testMigrateEpochCommand(final String command) {
         final ParserStructureTestingUtility util = new ParserStructureTestingUtility();
-        final String hierarchyXPath = "/root/transformStatement/teragrepTransformation/t_execParameter/t_migrateParameter/t_tableParameter/fieldType\n";
+        final String hierarchyXPath = "/root/transformStatement/teragrepTransformation/t_execParameter/t_migrateParameter\n";
         final Object hierarchyResult = Assertions.assertDoesNotThrow(() -> util.xpathQuery(command, hierarchyXPath, false));
         final NodeList hierarchyNodes = (NodeList) hierarchyResult;
         Assertions.assertEquals(1, hierarchyNodes.getLength(),
-                "Expected exactly one stringType node in parse tree with input <" + command + ">");
+                "expected hierarchyNodes length to be 1 for input <" + command + ">");
     }
 
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
-            "| teragrep exec migrate epoch",
-            "| teragrep exec migrate epoch table=\"example\"",
-            "| teragrep exec migrate epoch table='example'",
-            "| teragrep exec migrate epoch table=\"\"",
-            "| teragrep exec migrate epoch table \"example\"",
-            "| teragrep exec migrate epoch TABLE=\"example\"",
-            "| teragrep exec migrate epoch TABLE \"example\"",
-            "| teragrep exec migrate epoch table example",
-            "| teragrep exec migrate epoch table 'example'",
-            "| teragrep exec migrate epoch table=example",
+            "| teragrep exec migrate epoch"
     })
     public void adminMigrateEpochSyntaxParseTest(final String command) {
         Assertions.assertDoesNotThrow(() -> {
@@ -647,12 +624,13 @@ public class TeragrepSyntaxTests {
 
     @ParameterizedTest(name = "{index} command = ''{0}''")
     @ValueSource(strings = {
-            "| teragrep exec",
             "| teragrep exec migrate",
-            "| teragrep exec migrate epoch table",
-            "| teragrep exec migrate epoch table=",
+            "| teragrep exec migrate migrate epoch",
+            "| teragrep exec migrate epoch epoch",
+            "| teragrep exec MiGrAtE epoch",
+            "| teragrep exec migrate EpOcH"
     })
-    public void testInvalidSyntaxThrows(final String command) {
+    public void testInvalidRegexMigrateThrowsException(final String command) {
         Assertions.assertThrows(ParseCancellationException.class, () -> {
             final CharStream input = CharStreams.fromString(command);
             final DPLLexer lexer = new DPLLexer(input);

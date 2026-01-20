@@ -213,6 +213,6 @@ t_codecParameter
         ;
 
 t_migrateParameter
-        : COMMAND_TERAGREP_MODE_MIGRATE COMMAND_TERAGREP_MODE_EPOCH t_tableParameter?
+        : COMMAND_TERAGREP_MODE_MIGRATE COMMAND_TERAGREP_MODE_EPOCH
         ;
 
