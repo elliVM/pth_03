@@ -50,31 +50,36 @@ import com.teragrep.pth_03.ParserSyntaxTestingUtility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.w3c.dom.NodeList;
 
-public class TableSyntaxTests {
+public final class TableSyntaxTests {
     @ParameterizedTest(name = "{index} command=''{0}''")
     @ValueSource(strings = {
             "table",
+            "tableWithComma",
+            "tableWildcard"
     })
-    public void tableSyntaxParseTest(String arg) throws Exception {
-        String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
-        ParserSyntaxTestingUtility parserSyntaxTestingUtility
+   void tableSyntaxParseTest(String arg) throws Exception {
+        final String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
+        final ParserSyntaxTestingUtility parserSyntaxTestingUtility
                 = new ParserSyntaxTestingUtility(fileName, false);
         parserSyntaxTestingUtility.syntaxParseTest(arg);
     }
     @ParameterizedTest
     @ValueSource(strings = {
             "table",
+            "tableWithComma",
+            "tableWildcard"
     })
-    void xpathTest1(String arg) throws Exception {
+    void testTableTransformationExists(String arg) throws Exception {
         ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
-        String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
-        String xpathExp = "/root/transformStatement/tableTransformation";
+        final String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
+        final String xpathExp = "/root/transformStatement/tableTransformation";
 
-        NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
         // Check that 1 found
         assertEquals(1,nodesA.getLength());
     }
@@ -82,13 +87,51 @@ public class TableSyntaxTests {
     @ValueSource(strings = {
             "table",
     })
-    void xpathTest2(String arg) throws Exception {
-        ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
-        String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
-        String xpathExp = "/root/transformStatement/tableTransformation/t_table_wcfieldListParameter/t_table_fieldType[1]/t_table_stringType/value";
+    void testTableWithSpaceDelim(String arg) throws Exception {
+        final ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
+        final String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
+        final String xpathExp = "/root/transformStatement/tableTransformation/t_table_wcfieldListParameter/t_table_fieldType";
 
-        NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
-        // Check that 1 found
-        assertEquals(1,nodesA.getLength());
+        final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        // Check that 3 found
+        Assertions.assertEquals(3,nodesA.getLength());
+        Assertions.assertEquals("fuu",nodesA.item(0).getTextContent());
+        Assertions.assertEquals("bli",nodesA.item(1).getTextContent());
+        Assertions.assertEquals("byr*",nodesA.item(2).getTextContent());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "tableWithComma",
+    })
+    void testTableWithCommaDelim(String arg) throws Exception {
+        final ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
+        final String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
+        final String xpathExp = "/root/transformStatement/tableTransformation/t_table_wcfieldListParameter/t_table_fieldType";
+
+        final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        // Check that 3 found
+        Assertions.assertEquals(3,nodesA.getLength());
+        Assertions.assertEquals("fuu",nodesA.item(0).getTextContent());
+        Assertions.assertEquals("bli",nodesA.item(1).getTextContent());
+        Assertions.assertEquals("byr*",nodesA.item(2).getTextContent());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "tableWildcard",
+    })
+    void testTableWithWildcard(String arg) throws Exception {
+        final ParserStructureTestingUtility pstu = new ParserStructureTestingUtility();
+        final String fileName = "src/test/resources/antlr4/commands/table/" + arg + ".txt";
+        final String xpathExp = "/root/transformStatement/tableTransformation/t_table_wcfieldListParameter/t_table_fieldType";
+
+        final NodeList nodesA = (NodeList) pstu.xpathQueryFile(fileName, xpathExp, false);
+        // Check that 4 found
+        Assertions.assertEquals(4,nodesA.getLength());
+        Assertions.assertEquals("*",nodesA.item(0).getTextContent());
+        Assertions.assertEquals("*foo",nodesA.item(1).getTextContent());
+        Assertions.assertEquals("foo*bar",nodesA.item(2).getTextContent());
+        Assertions.assertEquals("ba*",nodesA.item(3).getTextContent());
     }
 }

@@ -61,7 +61,6 @@ COMMAND_TABLE_MODE_BRACKET_R: ']' -> type(BRACKET_R), popMode, popMode;
 
 // tokens
 
-COMMAND_TABLE_MODE_WILDCARD : '*';
 COMMAND_TABLE_MODE_COMMA : ',';
 COMMAND_TABLE_MODE_SINGLE_QUOTE: '\'';
 COMMAND_TABLE_MODE_DQSTRING: '"' ( '\\'. | '""' | ~('"'| '\\') )* '"';
